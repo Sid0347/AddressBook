@@ -30,5 +30,8 @@ int main()
             break;
         }
     }
+
+    free(Details.Book); // Free dynamically allocated memory.
+    Details.Book = NULL;
     return 0;
 }
