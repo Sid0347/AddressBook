@@ -2,36 +2,51 @@
 
 int main()
 {
-    int choice;
     struct addressBook Details;
-    Details.Book = NULL;
     Details.Contact_count = 0;
-    printf("Menu of functions : \n");
-    printf("===================\n");
-    printf("1. Create Contact\n2. Save Contact\n3. Search Contact\n4. Edit Contact\n5. Delete Contact\n6. Display Contact\n7. Exit\n");
-    printf("===================\n");
+    int choice;
+
     while (1)
     {
+        printf("|--------- Address Book ---------|\n");
+        printf("=================================\n");
+        printf("1. Create Contact\n2. Save Contact\n3. Search Contact\n4. Edit Contact\n5. Delete Contact\n6. Display Contact\n7. Exit\n");
+        printf("=================================\n");
 
         printf("Read user choice.\n");
         printf("Enter your choice : ");
         scanf("%d", &choice);
-    
+
         switch (choice)
         {
-            case 1:
+        case 1:
             Create_Contact(&Details);
-            // printf("Create Contact\n");
             break;
-    
-            case 2:
+
+        case 2:
+            Search_Contact(&Details);
+            break;
+
+        case 3:
+            Edit_Contact(&Details);
+            break;
+
+        case 4:
+            Save_Contact(&Details);
+            break;
+
+        case 5:
+            Delete_Contact(&Details);
+            break;
+
+        case 6:
             Display_Contact(&Details);
-            // printf("Save Contact\n");
+            break;
+
+        case 7:
+            Exit_Contact(&Details);
             break;
         }
     }
-
-    free(Details.Book); // Free dynamically allocated memory.
-    Details.Book = NULL;
     return 0;
 }
