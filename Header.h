@@ -1,3 +1,6 @@
+#ifndef HEADER_H
+#define HEADER_H
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
@@ -17,6 +20,8 @@ struct addressBook
     int Contact_count;
 };
 
+extern struct addressBook Details;
+extern int Exist_Index;
 // Feature functions of the Address Book.
 void Create_Contact(struct addressBook *Details);
 void Search_Contact(struct addressBook *Details);
@@ -30,3 +35,5 @@ void Exit_Contact(struct addressBook *Details);
 int Is_Valid_Name(char *Name);
 int Is_Valid_Mobile_Number(char *Mobile);
 int Is_Valid_Email(char *Email);
+
+#endif

@@ -12,13 +12,12 @@ void Create_Contact(struct addressBook *Details)
         scanf("%s", Name);
         if (Is_Valid_Name(Name))
         {
-            strcpy(Details->Book[Details->Contact_count].name, Name);
             printf("Valid Name\n");
             break;
         }
         else
         {
-            printf("Invalid Name.\n");
+            printf("Invalid Name Re-Enter.\n");
         }
     }
 
@@ -31,13 +30,12 @@ void Create_Contact(struct addressBook *Details)
         scanf("%s", Mobile);
         if (Is_Valid_Mobile_Number(Mobile))
         {
-            strcpy(Details->Book[Details->Contact_count].mobile, Mobile);
             printf("Valid Mobile Number.\n");
             break;
         }
         else
         {
-            printf("Invalid Mobile Number.\n");
+            printf("Invalid Mobile Number Re-Enter.\n");
         }
     }
 
@@ -52,16 +50,42 @@ void Create_Contact(struct addressBook *Details)
         strcpy(str, Email);
         if (Is_Valid_Email(Email))
         {
-            strcpy(Details->Book[Details->Contact_count].email, str);
             printf("Valid Email\n");
             break;
         }
         else
         {
-            printf("Invalid Email\n");
+            printf("Invalid Email Re-Enter.\n");
         }
     }
 
+    int Conferm_Option;
+    printf("Confermation to create contact.\n");
+    printf("You want to create contact!\n1. Press 1 for (Yes)\n2. Press 2 for (No)\n");
+    scanf("%d", &Conferm_Option);
+    if (Conferm_Option == 1)
+    {
+        if (Exist_Index != 0)
+        {
+            strcpy(Details->Book[Exist_Index].name, Name);
+            strcpy(Details->Book[Exist_Index].mobile, Mobile);
+            strcpy(Details->Book[Exist_Index].email, str);
+            Details->Contact_count--;
+        }
+        else
+        {
+            strcpy(Details->Book[Details->Contact_count].name, Name);
+            strcpy(Details->Book[Details->Contact_count].mobile, Mobile);
+            strcpy(Details->Book[Details->Contact_count].email, str);
+        }
+    }
+    else
+    {
+        printf("Contact Creation Cancelled!\n");
+        return;
+    }
+    printf("Contact Created Successfully!\n");
+    Exist_Index = 0;
     Details->Contact_count++;
 }
 /*................................................................*/
@@ -311,15 +335,15 @@ void Save_Contact(struct addressBook *Details)
 {
     FILE *file = fopen("Contact_Diary.txt", "w");
     int i;
-    if(file == NULL)
+    if (file == NULL)
     {
         printf("Error File Opening Failed.\n");
         return;
     }
 
-    for (i = 0; i <Details->Contact_count; i++)
+    for (i = 0; i < Details->Contact_count; i++)
     {
-        fprintf(file,"%-15s %-15s %-20s\n", Details->Book[i].name, Details->Book[i].mobile, Details->Book[i].email);
+        fprintf(file, "%-15s %-15s %-20s\n", Details->Book[i].name, Details->Book[i].mobile, Details->Book[i].email);
     }
     fclose(file);
     printf("Contacts saved in Contact Diary.\n");
@@ -369,6 +393,7 @@ void Delete_Contact(struct addressBook *Details)
                 {
                     Search_Flag = 1;
                     Delete_Flag = 1;
+                    break;
                 }
             }
             if (!Search_Flag)
@@ -385,6 +410,7 @@ void Delete_Contact(struct addressBook *Details)
                 {
                     Search_Flag = 1;
                     Delete_Flag = 1;
+                    break;
                 }
             }
             if (!Search_Flag)

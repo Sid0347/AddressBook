@@ -1,8 +1,9 @@
 #include "Header.h"
+struct addressBook Details;
+int Exist_Index;
 
 int main()
 {
-    struct addressBook Details;
     Details.Contact_count = 0;
     int choice;
 

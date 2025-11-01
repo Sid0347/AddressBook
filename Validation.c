@@ -20,6 +20,25 @@ int Is_Valid_Name(char *Name)
     }
     if (Valid && Atleast_one_letter)
     {
+        for (int i = 0; i < Details.Contact_count; i++)
+        {
+            if (strcmp(Details.Book[i].name, Name) == 0)
+            {
+                printf("The name is already exist in contact book (Select option to overwrite or cancel!).\n");
+                printf("1. Press 1 for (Overwrite)\n2. Press 2 for (Cancel to re-enter name)\n");
+                int option;
+                scanf("%d", &option);
+                if (option == 1)
+                {
+                    Exist_Index = i;
+                    return 1;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+        }
         return 1;
     }
     else
@@ -40,6 +59,25 @@ int Is_Valid_Mobile_Number(char *Mobile)
         if (!isdigit((unsigned char)Mobile[i])) // unsigned char because isdigit() expect an argument that fits in an unsigned char i.e.0-255.
         {
             return 0;
+        }
+    }
+    for (int i = 0; i < Details.Contact_count; i++)
+    {
+        if (strcmp(Details.Book[i].mobile, Mobile) == 0)
+        {
+            printf("The mobile is already exist in contact book (Select option to overwrite or cancel!).\n");
+            printf("1.  Press 1 for (Overwrite)\n2. Press 2 for (Cancel to re-enter mobile)\n");
+            int Option;
+            scanf("%d", &Option);
+            if (Option == 1)
+            {
+                Exist_Index = i;
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
         }
     }
     return 1;
@@ -76,7 +114,28 @@ int Is_Valid_Email(char *Email)
             }
         }
         if (Token_count == 2)
+        {
+            for (int i = 0; i < Details.Contact_count; i++)
+            {
+                if (strcmp(Details.Book[i].email, Email) == 0)
+                {
+                    printf("The email is already exist in contact book (Select option to overwrite or cancel!).\n");
+                    printf("1.  Press 1 for (Overwrite)\n2. Press 2 for (Cancel to re-enter email)\n");
+                    int Option;
+                    scanf("%d", &Option);
+                    if (Option == 1)
+                    {
+                        Exist_Index = i;
+                        return 1;
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                }
+            }
             return 1;
+        }
         Token = strtok(NULL, "@.");
     }
     return 0;
