@@ -22,7 +22,7 @@ int Is_Valid_Name(char *Name)
     {
         for (int i = 0; i < Details.Contact_count; i++)
         {
-            if (strcmp(Details.Book[i].name, Name) == 0)
+            if (strcmp(Details.Book[i].name, Name) == 0)    /* Condition to check existance of given name.*/
             {
                 printf("The name is already exist in contact book (Select option to overwrite or cancel!).\n");
                 printf("1. Press 1 for (Overwrite)\n2. Press 2 for (Cancel to re-enter name)\n");
@@ -30,12 +30,12 @@ int Is_Valid_Name(char *Name)
                 scanf("%d", &option);
                 if (option == 1)
                 {
-                    Exist_Index = i;
+                    Exist_Index = i;    /* If it is already exist in contact book then overwrite name on that index.*/
                     return 1;
                 }
                 else
                 {
-                    return 0;
+                    return 0;   /* Retern to Re-Enter name form user.*/
                 }
             }
         }
@@ -63,7 +63,7 @@ int Is_Valid_Mobile_Number(char *Mobile)
     }
     for (int i = 0; i < Details.Contact_count; i++)
     {
-        if (strcmp(Details.Book[i].mobile, Mobile) == 0)
+        if (strcmp(Details.Book[i].mobile, Mobile) == 0)    /* Condition to check existance of given mobile number.*/
         {
             printf("The mobile is already exist in contact book (Select option to overwrite or cancel!).\n");
             printf("1.  Press 1 for (Overwrite)\n2. Press 2 for (Cancel to re-enter mobile)\n");
@@ -71,12 +71,12 @@ int Is_Valid_Mobile_Number(char *Mobile)
             scanf("%d", &Option);
             if (Option == 1)
             {
-                Exist_Index = i;
+                Exist_Index = i;    /* If it is already exist in contact book then overwrite mobile number on that index.*/
                 return 1;
             }
             else
             {
-                return 0;
+                return 0;   /* Retern to Re-Enter mobile number form user.*/
             }
         }
     }
@@ -117,7 +117,7 @@ int Is_Valid_Email(char *Email)
         {
             for (int i = 0; i < Details.Contact_count; i++)
             {
-                if (strcmp(Details.Book[i].email, Email) == 0)
+                if (strcmp(Details.Book[i].email, Email) == 0)  /* Condition to check existance of given email address.*/
                 {
                     printf("The email is already exist in contact book (Select option to overwrite or cancel!).\n");
                     printf("1.  Press 1 for (Overwrite)\n2. Press 2 for (Cancel to re-enter email)\n");
@@ -125,12 +125,12 @@ int Is_Valid_Email(char *Email)
                     scanf("%d", &Option);
                     if (Option == 1)
                     {
-                        Exist_Index = i;
+                        Exist_Index = i;    /* If it is already exist in contact book then overwrite email address on that index.*/
                         return 1;
                     }
                     else
                     {
-                        return 0;
+                        return 0;   /* Retern to Re-Enter email address form user.*/
                     }
                 }
             }

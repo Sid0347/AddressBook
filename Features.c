@@ -59,6 +59,7 @@ void Create_Contact(struct addressBook *Details)
         }
     }
 
+    /* Ask user for permission about confermation to create contact or not.*/
     int Conferm_Option;
     printf("Confermation to create contact.\n");
     printf("You want to create contact!\n1. Press 1 for (Yes)\n2. Press 2 for (No)\n");
@@ -70,7 +71,7 @@ void Create_Contact(struct addressBook *Details)
             strcpy(Details->Book[Exist_Index].name, Name);
             strcpy(Details->Book[Exist_Index].mobile, Mobile);
             strcpy(Details->Book[Exist_Index].email, str);
-            Details->Contact_count--;
+            Details->Contact_count--;   /*The contact is creating on existing index because of that Contact_count should not be increse.*/
         }
         else
         {
@@ -82,10 +83,10 @@ void Create_Contact(struct addressBook *Details)
     else
     {
         printf("Contact Creation Cancelled!\n");
-        return;
+        return; /*This will go on main menu.*/
     }
     printf("Contact Created Successfully!\n");
-    Exist_Index = 0;
+    Exist_Index = 0;    /*The 'Exist_Index' reset for re-use at the time of another new contact create.*/
     Details->Contact_count++;
 }
 /*................................................................*/
