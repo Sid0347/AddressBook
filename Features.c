@@ -4,90 +4,137 @@
 void Create_Contact(struct addressBook *Details)
 {
     char Name[50];
+    int conferm;
     // While loop to get name until it's valid.
     while (1)
     {
         printf("Enter Name : ");
         getchar();
         scanf("%s", Name);
+        if (Name[0] == '\0') /* If entered string is blank then go to main menu.*/
+            return;
         if (Is_Valid_Name(Name))
         {
             printf("Valid Name\n");
+            printf("Conferm to add Name\n1. Save | 2. Cancel\n");
+            scanf("%d", &conferm);
+            if (conferm == 1) /* Confermation to save or not.*/
+            {
+                strcpy(Details->Book[Details->Contact_count].name, Name);
+                printf("Name is added successfully!\n");
+            }
+            else
+            {
+                printf("Name addition canceled!\n");
+                continue;
+            }
             break;
         }
         else
         {
-            printf("Invalid Name Re-Enter.\n");
+            printf("Invalid Name please Re-Enter.\n");
         }
     }
 
-    // While loop to get mobile number until it's valid.
-    char Mobile[14];
+    /* Menu for adding further details OR exit to main menu.*/
     while (1)
     {
-        getchar();
-        printf("Enter Mobile Number : ");
-        scanf("%s", Mobile);
-        if (Is_Valid_Mobile_Number(Mobile))
+        printf("|-----Add Contact Menu-----|\n");
+        printf("1. Add Details\n2. Exit to main menu\n");
+        int Option;
+        int exit_flag = 0;
+        scanf("%d", &Option);
+        if (Option == 1)
         {
-            printf("Valid Mobile Number.\n");
-            break;
-        }
-        else
-        {
-            printf("Invalid Mobile Number Re-Enter.\n");
-        }
-    }
+            while (1)
+            {
+                /* Menu for add details.*/
+                printf("|-----Add Details Menu-----|\n");
+                printf("1. Add Mobile Number\n2. Add Email Address\n3. Exit To 'Add Contact Menu'\n");
+                scanf("%d", &Option);
+                switch (Option)
+                {
+                case 1:
+                    // While loop to get mobile number until it's valid.
+                    char Mobile[40];
+                    while (1)
+                    {
+                        getchar();
+                        printf("Enter Mobile Number : ");
+                        scanf("%s", Mobile);
+                        if (Is_Valid_Mobile_Number(Mobile))
+                        {
+                            printf("Valid Mobile Number.\n");
+                            printf("Conferm to add Number\n1. Save | 2. Cancel\n");
+                            scanf("%d", &conferm);
+                            if (conferm == 1) /* Confermation to save or not.*/
+                            {
+                                strcpy(Details->Book[Details->Contact_count].mobile, Mobile);
+                                printf("Mobile number is added successfully!\n");
+                            }
+                            else
+                            {
+                                printf("Mobile number addition chanceled!\n");
+                                continue;
+                            }
+                            break;
+                        }
+                        else
+                        {
+                            printf("Invalid Mobile Number Re-Enter.\n");
+                        }
+                    }
+                    break;
+                case 2:
+                    // While loop to get email address until it's valid.
+                    char Email[50];
+                    char str[50];
+                    while (1)
+                    {
+                        printf("Enter email address : ");
+                        getchar();
+                        scanf("%s", Email);
+                        strcpy(str, Email);
+                        if (Is_Valid_Email(Email))
+                        {
+                            printf("Valid Email\n");
+                            printf("Conferm to add\n1. Save | 2. Chancel\n");
+                            scanf("%d", &conferm);
+                            if (conferm == 1) /* Confermation to save or not.*/
+                            {
+                                strcpy(Details->Book[Details->Contact_count].email, str);
+                                printf("Email address is added successfully!\n");
+                            }
+                            else
+                            {
+                                printf("Email address addition canceled!\n");
+                                continue;
+                            }
+                            break;
+                        }
+                        else
+                        {
+                            printf("Invalid Email Re-Enter.\n");
+                        }
+                    }
+                    break;
+                default:
+                    exit_flag = 1;
+                }
 
-    // While loop to get email address until it's valid.
-    char Email[50];
-    char str[50];
-    while (1)
-    {
-        printf("Enter email address : ");
-        getchar();
-        scanf("%s", Email);
-        strcpy(str, Email);
-        if (Is_Valid_Email(Email))
-        {
-            printf("Valid Email\n");
-            break;
+                if (exit_flag != 0) /* This flag is for exit from the while loop of 'Add Details Menu' and go to 'Add Contact Menu' */
+                {
+                    exit_flag = 0;
+                    break;
+                }
+            }
         }
         else
         {
-            printf("Invalid Email Re-Enter.\n");
+            Details->Contact_count++;
+            return;
         }
     }
-
-    /* Ask user for permission about confermation to create contact or not.*/
-    int Conferm_Option;
-    printf("Confermation to create contact.\n");
-    printf("You want to create contact!\n1. Press 1 for (Yes)\n2. Press 2 for (No)\n");
-    scanf("%d", &Conferm_Option);
-    if (Conferm_Option == 1)
-    {
-        if (Exist_Index != 0)
-        {
-            strcpy(Details->Book[Exist_Index].name, Name);
-            strcpy(Details->Book[Exist_Index].mobile, Mobile);
-            strcpy(Details->Book[Exist_Index].email, str);
-            Details->Contact_count--;   /*The contact is creating on existing index because of that Contact_count should not be increse.*/
-        }
-        else
-        {
-            strcpy(Details->Book[Details->Contact_count].name, Name);
-            strcpy(Details->Book[Details->Contact_count].mobile, Mobile);
-            strcpy(Details->Book[Details->Contact_count].email, str);
-        }
-    }
-    else
-    {
-        printf("Contact Creation Cancelled!\n");
-        return; /*This will go on main menu.*/
-    }
-    printf("Contact Created Successfully!\n");
-    Exist_Index = 0;    /*The 'Exist_Index' reset for re-use at the time of another new contact create.*/
-    Details->Contact_count++;
 }
 /*................................................................*/
 /*  Functiion for search contact.*/
@@ -121,6 +168,7 @@ void Search_Contact(struct addressBook *Details)
                     printf("| %-15s | %-15s | %-15s |\n", Details->Book[i].name, Details->Book[i].mobile, Details->Book[i].email);
                     printf("-------------------------------------------------------\n");
                     Found_Flag = 1;
+                    break;
                 }
             }
             if (!Found_Flag)
@@ -141,6 +189,7 @@ void Search_Contact(struct addressBook *Details)
                     printf("| %-15s | %-15s | %-15s |\n", Details->Book[i].name, Details->Book[i].mobile, Details->Book[i].email);
                     printf("-------------------------------------------------------\n");
                     Found_Flag = 1;
+                    break;
                 }
             }
             if (!Found_Flag)
@@ -161,6 +210,7 @@ void Search_Contact(struct addressBook *Details)
                     printf("| %-15s | %-15s | %-15s |\n", Details->Book[i].name, Details->Book[i].mobile, Details->Book[i].email);
                     printf("-------------------------------------------------------\n");
                     Found_Flag = 1;
+                    break;
                 }
             }
             if (!Found_Flag)
@@ -342,9 +392,13 @@ void Save_Contact(struct addressBook *Details)
         return;
     }
 
+    fprintf(file, "===============================================================\n");
+    fprintf(file, "| %-5s | %-15s | %-15s | %-15s |\n", "Sr.No", "Name", "Mobile number", "Email address");
+    fprintf(file, "===============================================================\n");
     for (i = 0; i < Details->Contact_count; i++)
     {
-        fprintf(file, "%-15s %-15s %-20s\n", Details->Book[i].name, Details->Book[i].mobile, Details->Book[i].email);
+        fprintf(file,"| %-5d | %-15s | %-15s | %-15s |\n", i + 1, Details->Book[i].name, Details->Book[i].mobile, Details->Book[i].email);
+        fprintf(file,"------------------------------------------------------------\n");
     }
     fclose(file);
     printf("Contacts saved in Contact Diary.\n");
@@ -378,6 +432,7 @@ void Delete_Contact(struct addressBook *Details)
                 {
                     Search_Flag = 1;
                     Delete_Flag = 1;
+                    break;
                 }
             }
             if (!Search_Flag)
@@ -442,13 +497,13 @@ void Display_Contact(struct addressBook *Details)
 {
     // int index = Details->Contact_count - 1;
 
-    printf("=======================================================\n");
-    printf("| %-15s | %-15s | %-15s |\n", "Name", "Mobile number", "Email address");
-    printf("=======================================================\n");
+    printf("===============================================================\n");
+    printf("| %-5s | %-15s | %-15s | %-15s |\n", "Sr.No", "Name", "Mobile number", "Email address");
+    printf("===============================================================\n");
     for (int i = 0; i < Details->Contact_count; i++)
     {
-        printf("| %-15s | %-15s | %-15s |\n", Details->Book[i].name, Details->Book[i].mobile, Details->Book[i].email);
-        printf("-------------------------------------------------------\n");
+        printf("| %-5d | %-15s | %-15s | %-15s |\n", i + 1, Details->Book[i].name, Details->Book[i].mobile, Details->Book[i].email);
+        printf("------------------------------------------------------------\n");
     }
 }
 /*................................................................*/
