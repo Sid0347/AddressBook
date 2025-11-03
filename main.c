@@ -11,7 +11,7 @@ int main()
     {
         printf("|--------- Address Book ---------|\n");
         printf("=================================\n");
-        printf("1. Create Contact\n2. Save Contact\n3. Search Contact\n4. Edit Contact\n5. Delete Contact\n6. Display Contact\n7. Exit\n");
+        printf("1. Create Contact\n2. Search Contact\n3. Edit Contact\n4. Save Contact\n5. Delete Contact\n6. Display Contact\n7. Exit\n");
         printf("=================================\n");
 
         printf("Read user choice.\n");
