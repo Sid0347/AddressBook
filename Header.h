@@ -7,29 +7,31 @@
 #include <string.h>
 #define size 50
 #define count 100
-struct contact
+typedef struct contact
 {
     char name[size];
     char mobile[size];
     char email[size];
-};
+}Contact;
 
-struct addressBook
+typedef struct addressBook
 {
-    struct contact Book[count];
+    Contact Book[count];
     int Contact_count;
-};
+}AddressBook;
 
-extern struct addressBook Details;
-extern int Exist_Index;
+extern AddressBook Details;
+
 // Feature functions of the Address Book.
-void Create_Contact(struct addressBook *Details);
-void Search_Contact(struct addressBook *Details);
-void Edit_Contact(struct addressBook *Details);
-void Save_Contact(struct addressBook *Details);
-void Delete_Contact(struct addressBook *Details);
-void Display_Contact(struct addressBook *Details);
-void Exit_Contact(struct addressBook *Details);
+void Load_Contact(AddressBook *Details);
+void Create_Contact(AddressBook *Details);
+void Search_Contact(AddressBook *Details);
+void Edit_Contact(AddressBook *Details);
+void Save_Contact(AddressBook *Details);
+void Delete_Contact(AddressBook *Details);
+void Display_Contact(AddressBook *Details);
+void Exit_Contact(AddressBook *Details);
+
 
 // Validation Fuctions.
 int Is_Valid_Name(char *Name);
