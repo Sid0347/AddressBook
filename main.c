@@ -1,12 +1,12 @@
 #include "Header.h"
-struct addressBook Details;
-int Exist_Index;
+AddressBook Details;
 
 int main()
 {
     Details.Contact_count = 0;
     int choice;
 
+    Load_Contact(&Details);
     while (1)
     {
         printf("|--------- Address Book ---------|\n");
