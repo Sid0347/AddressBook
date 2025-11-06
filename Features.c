@@ -1,7 +1,7 @@
 #include "Header.h"
 
 /* Function for create new contact.*/
-void Create_Contact(struct addressBook *Details)
+void Create_Contact(AddressBook *Details)
 {
     char Name[50];
     int conferm;
@@ -10,7 +10,7 @@ void Create_Contact(struct addressBook *Details)
     {
         printf("Enter Name : ");
         getchar();
-        scanf("%s", Name);
+        scanf("%[^\n]", Name);
         if (Name[0] == '\0') /* If entered string is blank then go to main menu.*/
             return;
         if (Is_Valid_Name(Name))
@@ -138,7 +138,7 @@ void Create_Contact(struct addressBook *Details)
 }
 /*................................................................*/
 /*  Functiion for search contact.*/
-void Search_Contact(struct addressBook *Details)
+void Search_Contact(AddressBook *Details)
 {
     int i, choice;
     int Found_Flag = 0;
@@ -227,7 +227,7 @@ void Search_Contact(struct addressBook *Details)
 }
 /*................................................................*/
 /* Function for edit contact.*/
-void Edit_Contact(struct addressBook *Details)
+void Edit_Contact(AddressBook *Details)
 {
     int i, Found_Count = -1;
     char Name[20];
@@ -382,9 +382,9 @@ void Edit_Contact(struct addressBook *Details)
 }
 /*................................................................*/
 /* Function for save contact.*/
-void Save_Contact(struct addressBook *Details)
+void Save_Contact(AddressBook *Details)
 {
-    FILE *file = fopen("Contact_Diary.txt", "w");
+    FILE *file = fopen("Contact_Book.csv", "w");
     int i;
     if (file == NULL)
     {
@@ -392,20 +392,60 @@ void Save_Contact(struct addressBook *Details)
         return;
     }
 
-    fprintf(file, "===============================================================\n");
-    fprintf(file, "| %-5s | %-15s | %-15s | %-15s |\n", "Sr.No", "Name", "Mobile number", "Email address");
-    fprintf(file, "===============================================================\n");
+    fprintf(file, "==================================================================\n");
+    fprintf(file, "| %-5s | %-15s | %-15s | %-20s |\n", "Sr.No", "Name", "Mobile number", "Email address");
+    fprintf(file, "==================================================================\n");
     for (i = 0; i < Details->Contact_count; i++)
     {
-        fprintf(file,"| %-5d | %-15s | %-15s | %-15s |\n", i + 1, Details->Book[i].name, Details->Book[i].mobile, Details->Book[i].email);
-        fprintf(file,"------------------------------------------------------------\n");
+        fprintf(file, "| %-5d | %-15s | %-15s | %-20s |\n", i + 1, Details->Book[i].name, Details->Book[i].mobile, Details->Book[i].email);
+        fprintf(file, "---------------------------------------------------------------\n");
     }
     fclose(file);
     printf("Contacts saved in Contact Diary.\n");
 }
 /*................................................................*/
+/* Function for save contact.*/
+void Load_Contact(AddressBook *Details)
+{
+    FILE *file = fopen("Contact_Book.csv", "r");
+    int i = 0;
+    if (file == NULL)
+    {
+        printf("Error : No existing contact file found.\n");
+        return;
+    }
+
+    char line[200];
+    int Sr_index;
+    int Input_Count;
+    /* Skip border lines.*/
+    fgets(line, sizeof(line), file);
+    fgets(line, sizeof(line), file);
+    fgets(line, sizeof(line), file);
+
+    while (fgets(line, sizeof(line), file))
+    {
+          if (line[0] == '=' || line[0] == '-')
+            continue;
+        Input_Count = sscanf(line, "| %d | %[^|] | %[^|] | %[^|] |",
+                             &Sr_index,
+                             Details->Book[i].name,
+                             Details->Book[i].mobile,
+                             Details->Book[i].email);
+
+        if (Input_Count == 1 || Input_Count == 4)
+        {
+            i++;
+        }
+    }
+
+    Details->Contact_count = i;
+    fclose(file);
+    printf("Contacts Lode successfully.\n");
+}
+/*................................................................*/
 /* Function for delete contact.*/
-void Delete_Contact(struct addressBook *Details)
+void Delete_Contact(AddressBook *Details)
 {
     int i, choice;
     int Search_Flag = 0;
@@ -493,22 +533,22 @@ void Delete_Contact(struct addressBook *Details)
 }
 /*................................................................*/
 /* Fuction for display contact address book.*/
-void Display_Contact(struct addressBook *Details)
+void Display_Contact(AddressBook *Details)
 {
     // int index = Details->Contact_count - 1;
 
-    printf("===============================================================\n");
-    printf("| %-5s | %-15s | %-15s | %-15s |\n", "Sr.No", "Name", "Mobile number", "Email address");
-    printf("===============================================================\n");
+    printf("==================================================================\n");
+    printf("| %-5s | %-15s | %-15s | %-20s |\n", "Sr.No", "Name", "Mobile number", "Email address");
+    printf("==================================================================\n");
     for (int i = 0; i < Details->Contact_count; i++)
     {
-        printf("| %-5d | %-15s | %-15s | %-15s |\n", i + 1, Details->Book[i].name, Details->Book[i].mobile, Details->Book[i].email);
-        printf("------------------------------------------------------------\n");
+        printf("| %-5d | %-15s | %-15s | %-20s |\n", i + 1, Details->Book[i].name, Details->Book[i].mobile, Details->Book[i].email);
+        printf("---------------------------------------------------------------\n");
     }
 }
 /*................................................................*/
 /* Function for exit from AddressBook.*/
-void Exit_Contact(struct addressBook *Details)
+void Exit_Contact(AddressBook *Details)
 {
     printf("Exit from contacts,\n");
     exit(0);
