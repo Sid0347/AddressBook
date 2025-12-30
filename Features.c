@@ -404,7 +404,7 @@ void Save_Contact(AddressBook *Details)
     printf("Contacts saved in Contact Diary.\n");
 }
 /*................................................................*/
-/* Function for save contact.*/
+/* Function for Load contact.*/
 void Load_Contact(AddressBook *Details)
 {
     FILE *file = fopen("Contact_Book.csv", "r");
